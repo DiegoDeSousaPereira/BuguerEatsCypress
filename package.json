@@ -1,0 +1,15 @@
+{
+  "name": "buguer-eats",
+  "version": "1.0.0",
+  "description": "Projeto de testes de aceitação do app burguerEats",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open"
+  },
+  "author": "Diego Sousa",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^9.7.0",
+    "cypress-file-upload": "^5.0.8"
+  }
+}
