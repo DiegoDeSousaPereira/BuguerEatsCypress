@@ -1,59 +1,75 @@
 
-                //ENTRANDO NO SITE ´'https://buger-eats.vercel.app', DEPOIS CLICANDO EM CADASTRO
-describe('cadastro', () => {
-    it('Usuario deve se tornar um entregador', () => {
-        cy.viewport(1440, 900)
-        cy.visit('https://buger-eats.vercel.app')
+import SignupPage from '../pages/SignupPage'
+var signup = new SignupPage
+// before(function(){
+// cy.log('Tudo aqui é executado uma vez ANTES de TODOS os casos de testes')
+//   })
+//   beforeEach(function(){
+//       cy.log('Tudo aqui é executado sempre ANTES de cada caso de teste')
+//   })
+//    after(function(){
+//        cy.log('Tudo aqui é executado uma unica vez DEPOIS de TODOS os casos de testes')
+//    })
+//   afterEach(function(){
+//       cy.log('Tudo aqui é executado sempre DEPOIS de CADA caso de teste')
+//    })
 
-        cy.get('a[href="/deliver"]').click()
-        cy.get('#page-deliver form h1').should('have.text', 'Cadastre-se para  fazer entregas')
+describe('Cadastro', () => {
 
 
-                    //CRIANDO MASSSA DE DADOS
-        var entregador = {
-            nome: 'Diego Sousa',
-            cpf: '08111290390',
-            email: 'diego992916913@gmail.com',
-            whatsapp: '88993106463',
-            endereco:{
-                cep: '62322240',
-                rua: 'Rua Zeferino Ferreira',
-                numero: '1044',
-                complemento: 'Ao lado do tok som',
-                bairro: 'Régis Diniz',
-                cidade_uf: 'Tianguá/CE'
-            },
-            cnh: 'cnh-digital.jpg'
-        }
+    beforeEach(function () {
+        cy.fixture('deliver').then((massa_de_dados) => {
+            this.deliver = massa_de_dados
+        })
+    })
 
-                //INSERINDO AS INFORMAÇÕES NOS CAMPOS
+    it('Cadastro de usuario com sucesso', function () {
 
-                //INFORMAÇAÇÃO PESSOAL
-        cy.get('input[name="name"]').type(entregador.nome)
-        cy.get('input[name="cpf"]').type(entregador.cpf)
-        cy.get('input[name="email"]').type(entregador.email)
-        cy.get('input[name="whatsapp"]').type(entregador.whatsapp)
+        //ENTRANDO NA PAGINA 
+        signup.go()
+        //INSERINDO AS INFORMAÇÕES NOS CAMPOS & VEREIFIÇANDO A BUSCA DO CEP
+        signup.fillForm(this.deliver.personal_information)
+        //CLICANDO NO BUTTON FINAL
+        signup.submit()
+        //FAQZENDO A VERIFICAÇÃO DA MENSAGEM+
+        signup.sucess_registration()
 
-            // INSERINDO O ENDEREÇO
-        cy.get('input[name="postalcode"]').type('62322240')
-        cy.get('input[type="button"][value="Buscar CEP"]').click()
-        cy.get('input[name="address-number"]').type(entregador.endereco.numero)
-        cy.get('input[name="address-details"]').type(entregador.endereco.complemento)
+    })
 
-                //CLICANDO NA OPÇÃO MOTO
-        cy.get('img[alt="Moto"]').click()
+    it('CPF incorreto', function () {
 
-            //VEREIFIÇANDO A BUSCA DO CEP
-        cy.get('input[name="address"]').should('have.value', entregador.endereco.rua)
-        cy.get('input[name="district"]').should('have.value', entregador.endereco.bairro)
-        cy.get('input[name="city-uf"]').should('have.value', entregador.endereco.cidade_uf)
-        
-    //A função "attachFile" é uma função exportada do arquivo "cypress-file-upload": "^5.0.8"
-    //Na parte do codigo " '/images/' + " foi feita uma concatenação com a pasta'images' da pasta 'fixtures'
-        cy.get('input[accept^="image"]').attachFile('/images/' + entregador.cnh)
+        //ENTRANDO NA PAGINA 
+        signup.go()
+        //INSERINDO AS INFORMAÇÕES NOS CAMPOS & VEREIFIÇANDO A BUSCA DO CEP
+        signup.fillForm(this.deliver.cpf_invalid)
+        //CLICANDO NO BUTTON FINAL
+        signup.submit()
+        //FAZENDO A VERIFICAÇÃO DA MENSAGEM
+        signup.alertMessageCpf()
+    })
 
-            //CLICANDO NO ULTIMO BUTTON DA PAGINA
-        cy.get('button[type]').click()
+    it('Email invalido', function () {
+
+        //ENTRANDO NA PAGINA 
+        signup.go()
+        //INSERINDO AS INFORMAÇÕES NOS CAMPOS & VEREIFIÇANDO A BUSCA DO CEP
+        signup.fillForm(this.deliver.email_invalid)
+        //CLICANDO NO BUTTON FINAL
+        signup.submit()
+        //FAQZENDO A VERIFICAÇÃO DA MENSAGEM
+        signup.alertMessageEmail()
+    })
+
+    it('Campos obrigatorios', function () {
+
+        //ENTRANDO NA PAGINA 
+        signup.go()
+        //CLICANDO NO BUTTON FINAL
+        signup.submit()
+        //FAQZENDO A VERIFICAÇÃO DA MENSAGEM
+        signup.alertMessageInvalid()
+     
     })
 })
+
 
