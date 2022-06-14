@@ -51,9 +51,15 @@ class SignupPage {
         cy.get('span[class="alert-error"]').should('have.text', 'Oops! Email com formato inválido.')
     }
     alertMessageInvalid() {
-        cy.get('.alert-error').should('have.text',
-            'É necessário informar o nomeÉ necessário informar o CPFÉ necessário informar o emailÉ necessário informar o CEPÉ necessário informar o número do endereçoSelecione o método de entregaAdicione uma foto da sua CNH')
-
+        cy.contains('.alert-error',
+        'É necessário informar o nome',
+        'É necessário informar o CPF' ,
+        'É necessário informar o email' ,
+        'É necessário informar o CEP' ,
+        'É necessário informar o número do endereço' ,
+        'Selecione o método de entrega' ,
+        'Adicione uma foto da sua CNH').should('be.visible')
+            
     }
 
 
