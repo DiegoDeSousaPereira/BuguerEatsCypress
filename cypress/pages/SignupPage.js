@@ -50,16 +50,27 @@ class SignupPage {
     alertMessageEmail() {
         cy.get('span[class="alert-error"]').should('have.text', 'Oops! Email com formato inválido.')
     }
-    alertMessageInvalid() {
-        cy.contains('.alert-error',
-        'É necessário informar o nome',
-        'É necessário informar o CPF' ,
-        'É necessário informar o email' ,
-        'É necessário informar o CEP' ,
-        'É necessário informar o número do endereço' ,
-        'Selecione o método de entrega' ,
-        'Adicione uma foto da sua CNH').should('be.visible')
-            
+
+    alertMesssageName() {
+        cy.contains('.alert-error', 'É necessário informar o nome').should('be.visible')
+    }
+    alertMessageCpfAll() {
+        cy.contains('.alert-error', 'É necessário informar o CPF',).should('be.visible')
+    }
+    alertMessageEmailAll() {
+        cy.contains('.alert-error', 'É necessário informar o email').should('be.visible')
+    }
+    alertMesssagePostalCode() {
+        cy.contains('.alert-error', 'É necessário informar o CEP').should('be.visible')
+    }
+    alertMesssageNumber() {
+        cy.contains('.alert-error', 'É necessário informar o número do endereço').should('be.visible')
+    }
+    alertMesssageMethodDeliver() {
+        cy.contains('.alert-error', 'Selecione o método de entrega').should('be.visible')
+    }
+    alertMesssageCnh() {
+        cy.contains('.alert-error', 'Adicione uma foto da sua CNH').should('be.visible')
     }
 
 

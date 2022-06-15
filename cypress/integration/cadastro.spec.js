@@ -67,7 +67,15 @@ describe('Cadastro', () => {
         //CLICANDO NO BUTTON FINAL
         signup.submit()
         //FAQZENDO A VERIFICAÇÃO DA MENSAGEM
-        signup.alertMessageInvalid()
+        signup.alertMesssageName()
+        signup.alertMessageCpfAll()
+        signup.alertMessageEmailAll()
+        signup.alertMesssagePostalCode()
+        signup.alertMesssageNumber()
+        signup.alertMesssageMethodDeliver()
+        signup.alertMesssageCnh()
+        
+
      
     })
 })
